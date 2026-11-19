@@ -3,7 +3,7 @@
    SETTINGS
 ================================= */
 
-const SECRET_PASSWORD = "04/120/2026";
+const SECRET_PASSWORD = "04/12/2026";
 
 const BIRTHDAY = new Date("2026-12-04T00:00:00+05:30");
 
