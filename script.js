@@ -14,7 +14,7 @@ const BIRTHDAY = new Date(2026, 11, 4, 0, 0, 0);
 // true = Testing mode
 // false = Real countdown
 
-const TEST_MODE = true;
+const TEST_MODE = false;
 
 const FORMSPREE_URL = "https://formspree.io/f/xzepljrz";
 
