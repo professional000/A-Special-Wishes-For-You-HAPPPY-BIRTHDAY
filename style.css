@@ -1,0 +1,764 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+/* ==========================================
+   GLOBAL SETTINGS
+========================================== */
+
+:root {
+
+    --pink: #ff72bd;
+
+    --purple: #a879ff;
+
+    --blue: #72d5ff;
+
+    --gold: #ffe5a1;
+
+}
+
+* {
+
+    box-sizing: border-box;
+
+    -webkit-tap-highlight-color: transparent;
+
+}
+
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    color: white;
+
+    font-family: 'Poppins', sans-serif;
+
+    background:
+
+        radial-gradient(circle at 15% 20%, #56338b, transparent 35%),
+
+        radial-gradient(circle at 85% 70%, #432b7a, transparent 35%),
+
+        linear-gradient(135deg, #100b29, #20103d, #101d42);
+
+    overflow-x: hidden;
+
+}
+
+
+/* BACKGROUND STARS */
+
+body::before {
+
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: .35;
+
+    background-image:
+
+        radial-gradient(white 1px, transparent 1px),
+
+        radial-gradient(#ffb9e5 1px, transparent 1px);
+
+    background-size: 70px 70px, 110px 110px;
+
+    animation: stars 35s linear infinite;
+
+    z-index: 0;
+
+}
+
+@keyframes stars {
+
+    to {
+
+        background-position: 300px 500px, -300px 400px;
+
+    }
+
+}
+
+
+/* ==========================================
+   SCREENS
+========================================== */
+
+.screen {
+
+    display: none;
+
+    position: relative;
+
+    z-index: 1;
+
+    min-height: 100vh;
+
+    padding: 30px 16px;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-direction: column;
+
+    text-align: center;
+
+    animation: appear .8s ease;
+
+}
+
+.screen.active {
+
+    display: flex;
+
+}
+
+@keyframes appear {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(18px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+    }
+
+}
+
+
+/* ==========================================
+   TEXT
+========================================== */
+
+h1, h2 {
+
+    font-family: 'Playfair Display', serif;
+
+    line-height: 1.35;
+
+}
+
+h1 {
+
+    font-size: clamp(30px, 8vw, 55px);
+
+}
+
+h2 {
+
+    font-size: clamp(25px, 6vw, 38px);
+
+}
+
+p {
+
+    color: #f4e8ff;
+
+    line-height: 1.9;
+
+    font-size: 14px;
+
+}
+
+.gradient-text {
+
+    background: linear-gradient(
+        90deg,
+        #ff9cd7,
+        #d6a8ff,
+        #83ddff
+    );
+
+    color: transparent;
+
+    background-clip: text;
+
+    -webkit-background-clip: text;
+
+}
+
+
+/* ==========================================
+   GLASS CARD
+========================================== */
+
+.glass {
+
+    width: min(100%, 500px);
+
+    padding: 28px 20px;
+
+    border: 1px solid #ffffff30;
+
+    border-radius: 28px;
+
+    background: linear-gradient(
+        145deg,
+        #ffffff17,
+        #ffffff08
+    );
+
+    box-shadow:
+
+        0 20px 60px #0005,
+
+        inset 0 0 30px #ffffff08;
+
+    backdrop-filter: blur(15px);
+
+}
+
+.glass.wide {
+
+    width: min(100%, 700px);
+
+}
+
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+button {
+
+    font-family: inherit;
+
+    border: 0;
+
+    cursor: pointer;
+
+    color: white;
+
+    font-weight: 600;
+
+    padding: 14px 24px;
+
+    border-radius: 30px;
+
+    background: linear-gradient(
+        100deg,
+        #ff65b5,
+        #9565ff
+    );
+
+    box-shadow: 0 0 25px #e77bff66;
+
+    transition: .25s;
+
+}
+
+button:hover {
+
+    transform: scale(1.05);
+
+}
+
+button:disabled {
+
+    opacity: .35;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+}
+
+
+/* ==========================================
+   INPUTS
+========================================== */
+
+input, textarea {
+
+    width: 100%;
+
+    padding: 14px;
+
+    border: 1px solid #ffffff40;
+
+    background: #ffffff12;
+
+    border-radius: 14px;
+
+    color: white;
+
+    outline: none;
+
+    font: inherit;
+
+    margin: 10px 0;
+
+}
+
+input::placeholder,
+textarea::placeholder {
+
+    color: #d4c4e8;
+
+}
+
+textarea {
+
+    resize: vertical;
+
+}
+
+
+/* ==========================================
+   GIFT
+========================================== */
+
+.emoji {
+
+    font-size: 65px;
+
+    filter: drop-shadow(0 0 18px #ff8cda);
+
+}
+
+.gift, .big-box {
+
+    font-size: 100px;
+
+    cursor: pointer;
+
+    animation: bounce 1.5s infinite;
+
+    filter: drop-shadow(0 0 25px #ff83d8);
+
+}
+
+@keyframes bounce {
+
+    50% {
+
+        transform: translateY(-15px) rotate(5deg);
+
+    }
+
+}
+
+
+/* ==========================================
+   COUNTDOWN
+========================================== */
+
+.timer {
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 9px;
+
+    margin: 25px 0;
+
+}
+
+.time {
+
+    padding: 15px 5px;
+
+    border-radius: 16px;
+
+    background: #ffffff15;
+
+    border: 1px solid #ffffff25;
+
+}
+
+.time strong {
+
+    display: block;
+
+    font-size: clamp(22px, 6vw, 32px);
+
+    color: #ffb6e4;
+
+}
+
+.time span {
+
+    font-size: 10px;
+
+}
+
+
+/* ==========================================
+   PASSWORD
+========================================== */
+
+.password-input {
+
+    text-align: center;
+
+    letter-spacing: 5px;
+
+    font-size: 20px;
+
+}
+
+
+/* ==========================================
+   A TO Z BALLOONS
+========================================== */
+
+.balloon-grid {
+
+    width: min(100%, 620px);
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 15px 12px;
+
+    margin: 25px auto;
+
+}
+
+.balloon {
+
+    width: 100%;
+
+    aspect-ratio: 1 / 1.1;
+
+    max-height: 105px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: clamp(25px, 6vw, 38px);
+
+    font-family: 'Playfair Display', serif;
+
+    font-weight: 700;
+
+    border-radius: 50% 50% 45% 45%;
+
+    border: 2px solid #ffffff70;
+
+    position: relative;
+
+    animation: float 2.5s ease-in-out infinite alternate;
+
+    box-shadow: 0 8px 20px #0003;
+
+}
+
+.balloon::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 2px;
+
+    height: 17px;
+
+    background: #ffffff99;
+
+    top: 100%;
+
+    left: 50%;
+
+}
+
+.balloon.opened {
+
+    opacity: .35;
+
+    filter: grayscale(1);
+
+    animation: none;
+
+    transform: scale(.9);
+
+}
+
+@keyframes float {
+
+    to {
+
+        transform: translateY(-9px) rotate(5deg);
+
+    }
+
+}
+
+
+/* ==========================================
+   MESSAGE POPUP
+========================================== */
+
+.modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 10;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background: #090519d9;
+
+}
+
+.modal.show {
+
+    display: flex;
+
+}
+
+.modal-card {
+
+    width: min(100%, 420px);
+
+    padding: 30px 20px;
+
+    background: linear-gradient(
+        145deg,
+        #45205f,
+        #211744
+    );
+
+    border: 1px solid #ffb5e7;
+
+    border-radius: 25px;
+
+    box-shadow: 0 0 50px #f77dd966;
+
+    animation: appear .4s ease;
+
+}
+
+
+/* ==========================================
+   SCRATCH PHOTO
+========================================== */
+
+.scratch-wrap {
+
+    width: min(100%, 600px);
+
+    aspect-ratio: 2388 / 1076;
+
+    position: relative;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    margin: 20px auto;
+
+    background: #160d35;
+
+    border: 2px solid #ffb2e5;
+
+    box-shadow: 0 0 30px #ff83d877;
+
+    touch-action: none;
+
+}
+
+.scratch-wrap img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    position: absolute;
+
+    inset: 0;
+
+}
+
+#scratchCanvas {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    touch-action: none;
+
+    cursor: crosshair;
+
+}
+
+.scratch-note {
+
+    font-size: 12px;
+
+    color: #f4d9ff;
+
+}
+
+
+/* ==========================================
+   FINAL MESSAGE
+========================================== */
+
+.final-heart {
+
+    font-size: 75px;
+
+    animation: heartbeat 1.2s infinite;
+
+}
+
+.final-message {
+
+    text-align: center;
+
+}
+
+@keyframes heartbeat {
+
+    25% {
+
+        transform: scale(1.15);
+
+    }
+
+    50% {
+
+        transform: scale(1);
+
+    }
+
+    75% {
+
+        transform: scale(1.15);
+
+    }
+
+}
+
+
+/* ==========================================
+   SPARKLE EFFECT
+========================================== */
+
+.particle {
+
+    position: fixed;
+
+    pointer-events: none;
+
+    z-index: 20;
+
+    animation: particle 1s ease-out forwards;
+
+}
+
+@keyframes particle {
+
+    to {
+
+        opacity: 0;
+
+        transform:
+            translate(var(--x), var(--y))
+            rotate(200deg)
+            scale(.2);
+
+    }
+
+}
+
+
+/* SCRATCH SPARKLE */
+
+.scratchSparkle {
+
+    position: absolute;
+
+    pointer-events: none;
+
+    animation: scratchSparkle 0.8s ease-out forwards;
+
+}
+
+@keyframes scratchSparkle {
+
+    to {
+
+        opacity: 0;
+
+        transform: translateY(-25px) scale(1.5);
+
+    }
+
+}
+
+
+/* ==========================================
+   MOBILE RESPONSIVE
+========================================== */
+
+@media (max-width: 380px) {
+
+    .balloon-grid {
+
+        gap: 10px 8px;
+
+    }
+
+    .balloon {
+
+        font-size: 27px;
+
+    }
+
+    .glass {
+
+        padding: 23px 15px;
+
+    }
+
+}
+
+
+/* TABLET / DESKTOP */
+
+@media (min-width: 650px) {
+
+    .balloon-grid {
+
+        grid-template-columns: repeat(7, 1fr);
+
+    }
+
+}
