@@ -1,764 +1,346 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
-
-
-/* ==========================================
-   GLOBAL SETTINGS
-========================================== */
-
-:root {
-
-    --pink: #ff72bd;
-
-    --purple: #a879ff;
-
-    --blue: #72d5ff;
-
-    --gold: #ffe5a1;
-
-}
 
 * {
-
-    box-sizing: border-box;
-
-    -webkit-tap-highlight-color: transparent;
-
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-
-    margin: 0;
-
-    min-height: 100vh;
-
-    color: white;
-
-    font-family: 'Poppins', sans-serif;
-
-    background:
-
-        radial-gradient(circle at 15% 20%, #56338b, transparent 35%),
-
-        radial-gradient(circle at 85% 70%, #432b7a, transparent 35%),
-
-        linear-gradient(135deg, #100b29, #20103d, #101d42);
-
-    overflow-x: hidden;
-
+  font-family: "Segoe UI", sans-serif;
+  min-height: 100vh;
+  color: #fff;
+  background: linear-gradient(135deg, #230018, #65003b, #240027);
+  overflow-x: hidden;
 }
-
-
-/* BACKGROUND STARS */
-
-body::before {
-
-    content: "";
-
-    position: fixed;
-
-    inset: 0;
-
-    pointer-events: none;
-
-    opacity: .35;
-
-    background-image:
-
-        radial-gradient(white 1px, transparent 1px),
-
-        radial-gradient(#ffb9e5 1px, transparent 1px);
-
-    background-size: 70px 70px, 110px 110px;
-
-    animation: stars 35s linear infinite;
-
-    z-index: 0;
-
-}
-
-@keyframes stars {
-
-    to {
-
-        background-position: 300px 500px, -300px 400px;
-
-    }
-
-}
-
-
-/* ==========================================
-   SCREENS
-========================================== */
 
 .screen {
-
-    display: none;
-
-    position: relative;
-
-    z-index: 1;
-
-    min-height: 100vh;
-
-    padding: 30px 16px;
-
-    align-items: center;
-
-    justify-content: center;
-
-    flex-direction: column;
-
-    text-align: center;
-
-    animation: appear .8s ease;
-
+  display: none;
+  min-height: 100vh;
+  width: 100%;
+  padding: 25px 15px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .screen.active {
-
-    display: flex;
-
+  display: flex;
+  animation: fadeIn 0.7s ease;
 }
 
-@keyframes appear {
-
-    from {
-
-        opacity: 0;
-
-        transform: translateY(18px);
-
-    }
-
-    to {
-
-        opacity: 1;
-
-        transform: translateY(0);
-
-    }
-
+.content {
+  width: 100%;
+  max-width: 520px;
+  padding: 30px 22px;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 25px;
+  background: rgba(255,255,255,0.09);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
 }
 
-
-/* ==========================================
-   TEXT
-========================================== */
-
-h1, h2 {
-
-    font-family: 'Playfair Display', serif;
-
-    line-height: 1.35;
-
+.content.wide {
+  max-width: 850px;
 }
 
 h1 {
-
-    font-size: clamp(30px, 8vw, 55px);
-
+  font-size: clamp(26px, 6vw, 38px);
+  margin-bottom: 18px;
+  color: #ffd6e8;
 }
 
 h2 {
-
-    font-size: clamp(25px, 6vw, 38px);
-
+  margin: 20px 0;
+  color: #ffe0ed;
 }
 
 p {
-
-    color: #f4e8ff;
-
-    line-height: 1.9;
-
-    font-size: 14px;
-
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 18px;
+  color: #ffeaf3;
 }
 
-.gradient-text {
-
-    background: linear-gradient(
-        90deg,
-        #ff9cd7,
-        #d6a8ff,
-        #83ddff
-    );
-
-    color: transparent;
-
-    background-clip: text;
-
-    -webkit-background-clip: text;
-
+.subtitle {
+  color: #ffc2df;
 }
-
-
-/* ==========================================
-   GLASS CARD
-========================================== */
-
-.glass {
-
-    width: min(100%, 500px);
-
-    padding: 28px 20px;
-
-    border: 1px solid #ffffff30;
-
-    border-radius: 28px;
-
-    background: linear-gradient(
-        145deg,
-        #ffffff17,
-        #ffffff08
-    );
-
-    box-shadow:
-
-        0 20px 60px #0005,
-
-        inset 0 0 30px #ffffff08;
-
-    backdrop-filter: blur(15px);
-
-}
-
-.glass.wide {
-
-    width: min(100%, 700px);
-
-}
-
-
-/* ==========================================
-   BUTTONS
-========================================== */
 
 button {
-
-    font-family: inherit;
-
-    border: 0;
-
-    cursor: pointer;
-
-    color: white;
-
-    font-weight: 600;
-
-    padding: 14px 24px;
-
-    border-radius: 30px;
-
-    background: linear-gradient(
-        100deg,
-        #ff65b5,
-        #9565ff
-    );
-
-    box-shadow: 0 0 25px #e77bff66;
-
-    transition: .25s;
-
+  border: none;
+  border-radius: 30px;
+  padding: 13px 25px;
+  margin-top: 15px;
+  background: linear-gradient(45deg, #ff4f9a, #ff87b9);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 5px 18px rgba(255,60,140,0.3);
 }
 
 button:hover {
-
-    transform: scale(1.05);
-
+  transform: scale(1.05);
 }
 
 button:disabled {
-
-    opacity: .35;
-
-    cursor: not-allowed;
-
-    transform: none;
-
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
 }
 
-
-/* ==========================================
-   INPUTS
-========================================== */
+.big-emoji {
+  font-size: 65px;
+  margin-bottom: 18px;
+}
 
 input, textarea {
-
-    width: 100%;
-
-    padding: 14px;
-
-    border: 1px solid #ffffff40;
-
-    background: #ffffff12;
-
-    border-radius: 14px;
-
-    color: white;
-
-    outline: none;
-
-    font: inherit;
-
-    margin: 10px 0;
-
+  width: 100%;
+  padding: 15px;
+  margin: 12px 0;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 14px;
+  outline: none;
+  background: rgba(255,255,255,0.12);
+  color: white;
+  font-size: 16px;
 }
 
 input::placeholder,
 textarea::placeholder {
-
-    color: #d4c4e8;
-
+  color: #eac8d9;
 }
 
 textarea {
-
-    resize: vertical;
-
+  min-height: 130px;
+  resize: vertical;
 }
 
-
-/* ==========================================
-   GIFT
-========================================== */
-
-.emoji {
-
-    font-size: 65px;
-
-    filter: drop-shadow(0 0 18px #ff8cda);
-
+.error {
+  color: #ff9cae;
+  min-height: 20px;
 }
 
-.gift, .big-box {
+/* COUNTDOWN */
 
-    font-size: 100px;
-
-    cursor: pointer;
-
-    animation: bounce 1.5s infinite;
-
-    filter: drop-shadow(0 0 25px #ff83d8);
-
+.countdown {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 30px 0;
 }
 
-@keyframes bounce {
-
-    50% {
-
-        transform: translateY(-15px) rotate(5deg);
-
-    }
-
+.countdown div {
+  background: rgba(255,255,255,0.13);
+  border-radius: 15px;
+  padding: 15px 5px;
 }
 
-
-/* ==========================================
-   COUNTDOWN
-========================================== */
-
-.timer {
-
-    display: grid;
-
-    grid-template-columns: repeat(4, 1fr);
-
-    gap: 9px;
-
-    margin: 25px 0;
-
+.countdown span {
+  display: block;
+  font-size: clamp(23px, 6vw, 35px);
+  font-weight: bold;
+  color: #ffb5d5;
+  font-variant-numeric: tabular-nums;
 }
 
-.time {
-
-    padding: 15px 5px;
-
-    border-radius: 16px;
-
-    background: #ffffff15;
-
-    border: 1px solid #ffffff25;
-
+.countdown small {
+  display: block;
+  margin-top: 7px;
+  font-size: 12px;
 }
 
-.time strong {
-
-    display: block;
-
-    font-size: clamp(22px, 6vw, 32px);
-
-    color: #ffb6e4;
-
-}
-
-.time span {
-
-    font-size: 10px;
-
-}
-
-
-/* ==========================================
-   PASSWORD
-========================================== */
-
-.password-input {
-
-    text-align: center;
-
-    letter-spacing: 5px;
-
-    font-size: 20px;
-
-}
-
-
-/* ==========================================
-   A TO Z BALLOONS
-========================================== */
+/* BALLOONS */
 
 .balloon-grid {
-
-    width: min(100%, 620px);
-
-    display: grid;
-
-    grid-template-columns: repeat(4, 1fr);
-
-    gap: 15px 12px;
-
-    margin: 25px auto;
-
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin: 25px auto;
+  max-width: 650px;
 }
 
 .balloon {
-
-    width: 100%;
-
-    aspect-ratio: 1 / 1.1;
-
-    max-height: 105px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: clamp(25px, 6vw, 38px);
-
-    font-family: 'Playfair Display', serif;
-
-    font-weight: 700;
-
-    border-radius: 50% 50% 45% 45%;
-
-    border: 2px solid #ffffff70;
-
-    position: relative;
-
-    animation: float 2.5s ease-in-out infinite alternate;
-
-    box-shadow: 0 8px 20px #0003;
-
+  position: relative;
+  border: none;
+  border-radius: 50% 50% 45% 45%;
+  width: 58px;
+  height: 70px;
+  margin: auto;
+  padding: 0;
+  color: white;
+  font-size: 21px;
+  font-weight: bold;
+  box-shadow: inset -5px -7px 10px rgba(0,0,0,0.15);
+  transition: 0.3s;
 }
 
 .balloon::after {
-
-    content: "";
-
-    position: absolute;
-
-    width: 2px;
-
-    height: 17px;
-
-    background: #ffffff99;
-
-    top: 100%;
-
-    left: 50%;
-
+  content: "";
+  position: absolute;
+  bottom: -9px;
+  left: 25px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 9px solid rgba(255,255,255,0.65);
 }
 
 .balloon.opened {
-
-    opacity: .35;
-
-    filter: grayscale(1);
-
-    animation: none;
-
-    transform: scale(.9);
-
+  opacity: 0.35;
+  transform: scale(0.8);
+  pointer-events: none;
 }
 
-@keyframes float {
+/* GIFT BOX */
 
-    to {
-
-        transform: translateY(-9px) rotate(5deg);
-
-    }
-
+.big-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 180px;
+  height: 180px;
+  margin: 30px auto;
+  background: rgba(255,255,255,0.1);
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.5s;
 }
 
-
-/* ==========================================
-   MESSAGE POPUP
-========================================== */
-
-.modal {
-
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 10;
-
-    display: none;
-
-    align-items: center;
-
-    justify-content: center;
-
-    padding: 20px;
-
-    background: #090519d9;
-
+.big-box span {
+  font-size: 90px;
 }
 
-.modal.show {
-
-    display: flex;
-
+.big-box small {
+  margin-top: 8px;
 }
 
-.modal-card {
-
-    width: min(100%, 420px);
-
-    padding: 30px 20px;
-
-    background: linear-gradient(
-        145deg,
-        #45205f,
-        #211744
-    );
-
-    border: 1px solid #ffb5e7;
-
-    border-radius: 25px;
-
-    box-shadow: 0 0 50px #f77dd966;
-
-    animation: appear .4s ease;
-
+.big-box.opened {
+  transform: rotate(8deg) scale(1.1);
 }
 
-
-/* ==========================================
-   SCRATCH PHOTO
-========================================== */
+/* SCRATCH PHOTO */
 
 .scratch-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 650px;
+  aspect-ratio: 2388 / 1076;
+  margin: 25px auto;
+  overflow: hidden;
+  border-radius: 15px;
+  background: #fff;
+  touch-action: none;
+}
 
-    width: min(100%, 600px);
-
-    aspect-ratio: 2388 / 1076;
-
-    position: relative;
-
-    border-radius: 18px;
-
-    overflow: hidden;
-
-    margin: 20px auto;
-
-    background: #160d35;
-
-    border: 2px solid #ffb2e5;
-
-    box-shadow: 0 0 30px #ff83d877;
-
-    touch-action: none;
-
+.scratch-wrap img,
+.scratch-wrap canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .scratch-wrap img {
-
-    width: 100%;
-
-    height: 100%;
-
-    object-fit: cover;
-
-    position: absolute;
-
-    inset: 0;
-
+  object-fit: contain;
 }
 
-#scratchCanvas {
-
-    position: absolute;
-
-    inset: 0;
-
-    width: 100%;
-
-    height: 100%;
-
-    touch-action: none;
-
-    cursor: crosshair;
-
+.scratch-wrap canvas {
+  cursor: crosshair;
+  touch-action: none;
 }
 
-.scratch-note {
+/* BIRTHDAY MESSAGE */
 
-    font-size: 12px;
-
-    color: #f4d9ff;
-
+.birthday-message {
+  font-size: 18px;
+  line-height: 1.9;
 }
 
+/* POPUP */
 
-/* ==========================================
-   FINAL MESSAGE
-========================================== */
-
-.final-heart {
-
-    font-size: 75px;
-
-    animation: heartbeat 1.2s infinite;
-
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0,0,0,0.75);
 }
 
-.final-message {
-
-    text-align: center;
-
+.modal.show {
+  display: flex;
+  animation: fadeIn 0.3s ease;
 }
 
-@keyframes heartbeat {
-
-    25% {
-
-        transform: scale(1.15);
-
-    }
-
-    50% {
-
-        transform: scale(1);
-
-    }
-
-    75% {
-
-        transform: scale(1.15);
-
-    }
-
+.modal-box {
+  width: 100%;
+  max-width: 420px;
+  padding: 30px 22px;
+  text-align: center;
+  border-radius: 25px;
+  background: linear-gradient(145deg, #720044, #340027);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
 }
 
+/* FLOATING HEARTS */
 
-/* ==========================================
-   SPARKLE EFFECT
-========================================== */
-
-.particle {
-
-    position: fixed;
-
-    pointer-events: none;
-
-    z-index: 20;
-
-    animation: particle 1s ease-out forwards;
-
+.hearts {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
 }
 
-@keyframes particle {
-
-    to {
-
-        opacity: 0;
-
-        transform:
-            translate(var(--x), var(--y))
-            rotate(200deg)
-            scale(.2);
-
-    }
-
+.heart {
+  position: absolute;
+  bottom: -30px;
+  font-size: 20px;
+  opacity: 0.5;
+  animation: floatUp linear forwards;
 }
 
-
-/* SCRATCH SPARKLE */
-
-.scratchSparkle {
-
-    position: absolute;
-
-    pointer-events: none;
-
-    animation: scratchSparkle 0.8s ease-out forwards;
-
+@keyframes floatUp {
+  to {
+    transform: translateY(-110vh) rotate(360deg);
+    opacity: 0;
+  }
 }
 
-@keyframes scratchSparkle {
-
-    to {
-
-        opacity: 0;
-
-        transform: translateY(-25px) scale(1.5);
-
-    }
-
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
+@media (max-width: 480px) {
+  .content {
+    padding: 25px 15px;
+  }
 
-/* ==========================================
-   MOBILE RESPONSIVE
-========================================== */
+  .balloon-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
 
-@media (max-width: 380px) {
+  .balloon {
+    width: 52px;
+    height: 63px;
+  }
 
-    .balloon-grid {
+  .countdown {
+    gap: 6px;
+  }
 
-        gap: 10px 8px;
-
-    }
-
-    .balloon {
-
-        font-size: 27px;
-
-    }
-
-    .glass {
-
-        padding: 23px 15px;
-
-    }
-
-}
-
-
-/* TABLET / DESKTOP */
-
-@media (min-width: 650px) {
-
-    .balloon-grid {
-
-        grid-template-columns: repeat(7, 1fr);
-
-    }
-
+  .countdown div {
+    padding: 12px 3px;
+  }
 }
