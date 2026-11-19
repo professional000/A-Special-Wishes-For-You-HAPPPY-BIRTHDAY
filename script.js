@@ -300,7 +300,7 @@ const messages = [
 
     "T - Today is your beautiful beginning. 🌹",
 
-    "U - Unlimited happiness is my wish for you. 💕
+    "U - Unlimited happiness is my wish for you. 💕",
 
     "V - Very special people deserve special days. 🎁",
 
