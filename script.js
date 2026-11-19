@@ -1,976 +1,646 @@
+/* ==============================
+   SETTINGS
+============================== */
 
-/* ==================================================
-   BAVANI'S MAGICAL BIRTHDAY SURPRISE ❤️
-   COMPLETE JAVASCRIPT
-================================================== */
+// Secret password
+const SECRET_PASSWORD = "04/12/2026";
 
-
-/* ==================================================
-   01. SETTINGS
-================================================== */
-
-const SECRET_PASSWORD = "BAVANI";
-
-// Birthday: 04 December 2026
-// Unlock time: 12:00 AM Indian Standard Time
+// Birthday: 04 December 2026, 12:00 AM IST
 const BIRTHDAY = new Date("2026-12-04T00:00:00+05:30");
 
-// TEST MODE
-// true  = Test website immediately
-// false = Wait until birthday midnight
-
+// true = Testing mode (skip countdown)
+// false = Real countdown
 const TEST_MODE = true;
 
+// Formspree endpoint
 const FORMSPREE_URL = "https://formspree.io/f/xzepljrz";
 
 
-/* ==================================================
-   02. NAVIGATION
-================================================== */
+/* ==============================
+   NAVIGATION
+============================== */
 
 function next(number) {
+  document.querySelectorAll(".screen").forEach(screen => {
+    screen.classList.remove("active");
+  });
 
-    document.querySelectorAll(".screen").forEach(screen => {
-        screen.classList.remove("active");
+  const target = document.getElementById("s" + number);
+
+  if (!target) return;
+
+  target.classList.add("active");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  startMusic();
+
+  if (number === 6) {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(setupScratch);
     });
-
-    const target = document.getElementById("s" + number);
-
-    if (target) {
-        target.classList.add("active");
-    }
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-    if (number === 4) {
-        createBalloons();
-    }
-
-    if (number === 6) {
-        requestAnimationFrame(setupScratch);
-    }
-
-    if (number === 8) {
-        createSparkles();
-    }
+  }
 }
 
 
-/* ==================================================
-   03. BACKGROUND MUSIC
-================================================== */
-
-const music = new Audio("romantic.mp3");
-
-music.loop = true;
-music.volume = 0.35;
+/* ==============================
+   BACKGROUND MUSIC
+============================== */
 
 let musicStarted = false;
 
 function startMusic() {
+  const music = document.getElementById("bgMusic");
 
-    if (musicStarted) return;
+  if (!music || musicStarted) return;
 
-    music.play()
-        .then(() => {
-            musicStarted = true;
-        })
-        .catch(() => {
-            console.log("Music waiting for user interaction.");
-        });
+  music.volume = 0.35;
+
+  music.play()
+    .then(() => {
+      musicStarted = true;
+    })
+    .catch(() => {
+      // Browser may block autoplay.
+      // Music will retry on the next user interaction.
+    });
 }
 
-document.addEventListener("click", startMusic);
 
-
-/* ==================================================
-   04. REAL-TIME COUNTDOWN + TEST MODE
-================================================== */
+/* ==============================
+   COUNTDOWN
+============================== */
 
 function updateCountdown() {
+  const continueButton = document.getElementById("countContinue");
+  const countText = document.getElementById("countText");
 
-    const daysElement = document.getElementById("days");
-    const hoursElement = document.getElementById("hours");
-    const minutesElement = document.getElementById("minutes");
-    const secondsElement = document.getElementById("seconds");
+  if (TEST_MODE) {
+    document.getElementById("days").textContent = "00";
+    document.getElementById("hours").textContent = "00";
+    document.getElementById("minutes").textContent = "00";
+    document.getElementById("seconds").textContent = "00";
 
-    const countText = document.getElementById("countText");
-    const continueButton = document.getElementById("countContinue");
+    countText.textContent = "Test Mode Activated! Your surprise is ready ❤️";
+    continueButton.disabled = false;
+    return;
+  }
 
-    if (
-        !daysElement ||
-        !hoursElement ||
-        !minutesElement ||
-        !secondsElement
-    ) {
-        return;
-    }
+  const now = new Date();
+  const difference = BIRTHDAY.getTime() - now.getTime();
 
-    // TEST MODE
-    if (TEST_MODE) {
+  if (difference <= 0) {
+    document.getElementById("days").textContent = "00";
+    document.getElementById("hours").textContent = "00";
+    document.getElementById("minutes").textContent = "00";
+    document.getElementById("seconds").textContent = "00";
 
-        daysElement.textContent = "00";
-        hoursElement.textContent = "00";
-        minutesElement.textContent = "00";
-        secondsElement.textContent = "00";
+    countText.textContent = "Happy Birthday Bavani! 🎂❤️";
+    continueButton.disabled = false;
+    return;
+  }
 
-        if (countText) {
-            countText.textContent =
-                "🧪 TEST MODE: Your surprise is ready! ❤️";
-        }
+  const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+  const hours = Math.floor(
+    (difference / (1000 * 60 * 60)) % 24
+  );
+  const minutes = Math.floor(
+    (difference / (1000 * 60)) % 60
+  );
+  const seconds = Math.floor(
+    (difference / 1000) % 60
+  );
 
-        if (continueButton) {
-            continueButton.disabled = false;
-            continueButton.textContent = "TEST OPEN SURPRISE ✨";
-        }
+  document.getElementById("days").textContent =
+    String(days).padStart(2, "0");
 
-        return;
-    }
+  document.getElementById("hours").textContent =
+    String(hours).padStart(2, "0");
 
-    // REAL COUNTDOWN
-    const now = new Date();
-    const difference = BIRTHDAY.getTime() - now.getTime();
+  document.getElementById("minutes").textContent =
+    String(minutes).padStart(2, "0");
 
-    // Birthday reached
-    if (difference <= 0) {
+  document.getElementById("seconds").textContent =
+    String(seconds).padStart(2, "0");
 
-        daysElement.textContent = "00";
-        hoursElement.textContent = "00";
-        minutesElement.textContent = "00";
-        secondsElement.textContent = "00";
-
-        if (countText) {
-            countText.textContent =
-                "🎂 Happy Birthday Bavani! Your surprise is ready! ❤️";
-        }
-
-        if (continueButton) {
-            continueButton.disabled = false;
-            continueButton.textContent = "OPEN YOUR SURPRISE ❤️";
-        }
-
-        return;
-    }
-
-    // Birthday not reached
-    if (continueButton) {
-        continueButton.disabled = true;
-        continueButton.textContent = "WAIT FOR MIDNIGHT ⏳";
-    }
-
-    const days = Math.floor(
-        difference / (1000 * 60 * 60 * 24)
-    );
-
-    const hours = Math.floor(
-        (difference / (1000 * 60 * 60)) % 24
-    );
-
-    const minutes = Math.floor(
-        (difference / (1000 * 60)) % 60
-    );
-
-    const seconds = Math.floor(
-        (difference / 1000) % 60
-    );
-
-    daysElement.textContent = String(days).padStart(2, "0");
-    hoursElement.textContent = String(hours).padStart(2, "0");
-    minutesElement.textContent = String(minutes).padStart(2, "0");
-    secondsElement.textContent = String(seconds).padStart(2, "0");
-
-    if (countText) {
-        countText.textContent =
-            "Counting every moment until your special day... ❤️";
-    }
+  countText.textContent = "Waiting for your special day... ❤️";
+  continueButton.disabled = true;
 }
 
-// Start countdown
 updateCountdown();
-
-// Refresh every second
 setInterval(updateCountdown, 1000);
 
 
-/* ==================================================
-   05. PASSWORD PROTECTION
-================================================== */
+/* ==============================
+   PASSWORD
+============================== */
 
 function checkPassword() {
-
-    const passwordInput = document.getElementById("password");
-    const error = document.getElementById("passError");
-
-    if (!passwordInput) return;
-
-    const enteredPassword = passwordInput.value.trim();
-
-    if (enteredPassword.toUpperCase() === SECRET_PASSWORD) {
-
-        if (error) {
-            error.textContent = "";
-        }
-
-        next(4);
-
-    } else {
-
-        if (error) {
-            error.textContent = "Wrong password! Try again ❤️";
-        }
-
-        passwordInput.value = "";
-        passwordInput.focus();
-    }
-}
-
-
-/* ==================================================
-   06. A TO Z – 26 SPECIAL MESSAGES
-================================================== */
-
-const alphabetMessages = {
-
-    A: "A beautiful soul deserves endless happiness. ❤️",
-
-    B: "Be happy, keep smiling and always shine. ✨",
-
-    C: "Create beautiful memories wherever you go. 🌸",
-
-    D: "Dream big. You deserve every beautiful thing. 💖",
-
-    E: "Every moment of your life should be magical. 🌟",
-
-    F: "Find happiness in every little thing. 🦋",
-
-    G: "Good things are always waiting for you. 🎀",
-
-    H: "Happiness looks beautiful on you. 😊",
-
-    I: "Imagine a life filled with endless smiles. 💕",
-
-    J: "Just keep being the wonderful person you are. 🌷",
-
-    K: "Keep shining like the brightest star. ⭐",
-
-    L: "Let your dreams become your reality. 💫",
-
-    M: "May your heart always be filled with love. ❤️",
-
-    N: "Never stop smiling, Bavani. 🥰",
-
-    O: "Only beautiful moments should fill your life. 🌹",
-
-    P: "Peace, love and happiness always follow you. 🕊️",
-
-    Q: "Quiet moments can hold the sweetest memories. 💗",
-
-    R: "Remember, you are truly special. 🎁",
-
-    S: "Smile more, worry less and enjoy life. 🌻",
-
-    T: "Today is all about celebrating you. 🎂",
-
-    U: "Unforgettable memories make life beautiful. 💝",
-
-    V: "Very special people deserve magical moments. ✨",
-
-    W: "Wishing you a lifetime of happiness. 💐",
-
-    X: "Xtra happiness and love for you today. 💓",
-
-    Y: "You deserve the whole world of happiness. 🌍",
-
-    Z: "Zero limits to your dreams and happiness. 🌈"
-
-};
-
-
-/* ==================================================
-   07. BALLOON COLORS
-================================================== */
-
-const balloonColors = [
-
-    "#ff4d6d",
-    "#ff85a1",
-    "#c77dff",
-    "#7b2cbf",
-    "#4895ef",
-    "#4cc9f0",
-    "#06d6a0",
-    "#ffd166",
-    "#fb8500",
-    "#f72585",
-    "#b5179e",
-    "#90be6d",
-    "#ff6b6b"
-
-];
-
-
-/* ==================================================
-   08. SHUFFLE ARRAY
-================================================== */
-
-function shuffle(array) {
-
-    const result = [...array];
-
-    for (let i = result.length - 1; i > 0; i--) {
-
-        const j = Math.floor(Math.random() * (i + 1));
-
-        [result[i], result[j]] = [result[j], result[i]];
-    }
-
-    return result;
-}
-
-
-/* ==================================================
-   09. CREATE 26 BALLOONS – A TO Z
-================================================== */
-
-let openedBalloons = new Set();
-let balloonsCreated = false;
-
-function createBalloons() {
-
-    const container = document.getElementById("balloonGrid");
-
-    if (!container) return;
-
-    if (balloonsCreated) return;
-
-    balloonsCreated = true;
-
-    openedBalloons.clear();
-
-    container.innerHTML = "";
-
-    const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-
-    const shuffledAlphabets = shuffle(alphabets);
-
-    shuffledAlphabets.forEach((letter, index) => {
-
-        const balloon = document.createElement("button");
-
-        balloon.className = "balloon";
-        balloon.type = "button";
-
-        balloon.textContent = letter;
-
-        balloon.dataset.letter = letter;
-
-        balloon.style.background =
-            balloonColors[index % balloonColors.length];
-
-        balloon.style.animationDelay =
-            Math.random() * 2 + "s";
-
-        balloon.addEventListener("click", () => {
-
-            if (openedBalloons.has(letter)) return;
-
-            openedBalloons.add(letter);
-
-            balloon.classList.add("opened");
-
-            balloon.disabled = true;
-
-            showBalloonMessage(letter);
-
-            updateBalloonCount();
-
-        });
-
-        container.appendChild(balloon);
-
-    });
-
-    updateBalloonCount();
-}
-
-
-/* ==================================================
-   10. BALLOON COUNTER
-================================================== */
-
-function updateBalloonCount() {
-
-    const counter = document.getElementById("balloonCount");
-
-    const continueButton =
-        document.getElementById("balloonContinue");
-
-    if (counter) {
-
-        counter.textContent =
-            openedBalloons.size + " / 26 opened";
-
-    }
-
-    if (continueButton) {
-
-        continueButton.disabled =
-            openedBalloons.size !== 26;
-
-    }
-}
-
-
-/* ==================================================
-   11. SHOW BALLOON MESSAGE
-================================================== */
-
-function showBalloonMessage(letter) {
-
-    const modal = document.getElementById("modal");
-
-    const title = document.getElementById("modalTitle");
-
-    const message = document.getElementById("modalMessage");
-
-    const emoji = document.getElementById("modalEmoji");
-
-    if (!modal || !title || !message) return;
-
-    title.textContent = "Letter " + letter + " ❤️";
-
-    message.textContent = alphabetMessages[letter];
-
-    if (emoji) {
-        emoji.textContent = "🎈";
-    }
-
-    modal.classList.add("show");
-
-    createSparkles();
-}
-
-
-/* ==================================================
-   12. CLOSE MESSAGE POPUP
-================================================== */
-
-function closeModal() {
-
-    const modal = document.getElementById("modal");
-
-    if (modal) {
-        modal.classList.remove("show");
-    }
-}
-
-
-/* ==================================================
-   13. SPECIAL GIFT BOX
-================================================== */
-
-let giftOpened = false;
-
-function openBox() {
-
-    if (giftOpened) return;
-
-    giftOpened = true;
-
-    const gift = document.querySelector(".big-box");
-
-    const boxText = document.getElementById("boxText");
-
-    if (gift) {
-        gift.textContent = "💝";
-        gift.style.animation = "none";
-    }
-
-    if (boxText) {
-        boxText.textContent =
-            "Your special memory is waiting... ❤️";
-    }
-
-    createSparkles();
+  const password = document.getElementById("password").value.trim();
+  const error = document.getElementById("passError");
+
+  if (password.toUpperCase() === SECRET_PASSWORD) {
+    error.textContent = "";
+
+    showModal(
+      "🔓",
+      "Unlocked!",
+      "Your little surprises are waiting for you! ❤️"
+    );
 
     setTimeout(() => {
-        next(6);
-    }, 1200);
+      closeModal();
+      next(4);
+    }, 1500);
+
+  } else {
+    error.textContent = "Oops! Wrong password. Try again ❤️";
+  }
 }
 
 
-/* ==================================================
-   14. SCRATCH PHOTO ELEMENTS
-================================================== */
+/* ==============================
+   A-Z BALLOON MESSAGES
+============================== */
 
-const hiddenPhoto = document.getElementById("hiddenPhoto");
+const alphabetMessages = {
+  A: "Always keep smiling. Your smile makes everything beautiful! ❤️",
+  B: "Beautiful memories begin with beautiful people like you.",
+  C: "Cherish every little moment in your life.",
+  D: "Dream big and never stop believing in yourself.",
+  E: "Every day is special when you choose happiness.",
+  F: "Forever stay happy and keep shining.",
+  G: "God bless you with endless happiness.",
+  H: "Happiness looks beautiful on you.",
+  I: "I hope all your dreams come true.",
+  J: "Just keep being the wonderful person you are.",
+  K: "Keep smiling, because your smile is precious.",
+  L: "Life gives beautiful moments. Enjoy every one of them.",
+  M: "May your life be filled with love and laughter.",
+  N: "Never lose the beautiful smile on your face.",
+  O: "Only happiness and beautiful memories for you.",
+  P: "Please stay the same wonderful person always.",
+  Q: "Queen of your own beautiful world. Keep shining!",
+  R: "Remember that you deserve all the happiness.",
+  S: "Smile more, worry less and enjoy life.",
+  T: "Today is your day. Make it unforgettable!",
+  U: "Unique people deserve unique happiness.",
+  V: "Very special wishes for a very special person.",
+  W: "Wishing you a wonderful year ahead.",
+  X: "Xtra happiness and love to you today!",
+  Y: "You deserve every beautiful thing in this world.",
+  Z: "Zero worries, endless smiles and unlimited happiness!"
+};
 
-const canvas = document.getElementById("scratchCanvas");
+const balloonColors = [
+  "#ff4f81",
+  "#a855f7",
+  "#ff9f43",
+  "#22b8cf",
+  "#e64980",
+  "#845ef7",
+  "#f06595",
+  "#20c997"
+];
 
-const ctx = canvas ? canvas.getContext("2d") : null;
+const openedLetters = new Set();
 
-let scratching = false;
+function createBalloons() {
+  const grid = document.getElementById("balloonGrid");
 
-let scratched = false;
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
+  // Random order
+  for (let i = letters.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [letters[i], letters[j]] = [letters[j], letters[i]];
+  }
+
+  letters.forEach((letter, index) => {
+    const balloon = document.createElement("button");
+
+    balloon.className = "balloon";
+    balloon.textContent = letter;
+    balloon.style.background =
+      balloonColors[index % balloonColors.length];
+
+    balloon.addEventListener("click", () => {
+      openBalloon(letter, balloon);
+    });
+
+    grid.appendChild(balloon);
+  });
+
+  updateBalloonCount();
+}
+
+function openBalloon(letter, balloon) {
+  if (openedLetters.has(letter)) return;
+
+  openedLetters.add(letter);
+  balloon.classList.add("opened");
+
+  updateBalloonCount();
+  sparkleBurst();
+
+  showModal(
+    "🎈",
+    "Letter " + letter,
+    alphabetMessages[letter]
+  );
+}
+
+function updateBalloonCount() {
+  const count = openedLetters.size;
+
+  document.getElementById("balloonCount").textContent =
+    "Opened: " + count + " / 26";
+
+  document.getElementById("balloonContinue").disabled =
+    count !== 26;
+
+  if (count === 26) {
+    setTimeout(() => {
+      showModal(
+        "🎉",
+        "Amazing!",
+        "You opened all 26 balloons! One more surprise is waiting."
+      );
+    }, 400);
+  }
+}
+
+
+/* ==============================
+   GIFT BOX
+============================== */
+
+let boxOpened = false;
+
+function openBox() {
+  if (boxOpened) return;
+
+  boxOpened = true;
+
+  const box = document.querySelector(".big-box");
+  const text = document.getElementById("boxText");
+
+  box.classList.add("opened");
+  box.querySelector("span").textContent = "💝";
+
+  text.textContent =
+    "The most beautiful gift is a collection of lovely memories! ❤️";
+
+  sparkleBurst();
+
+  setTimeout(() => {
+    next(6);
+  }, 1800);
+}
+
+
+/* ==============================
+   SCRATCH PHOTO
+============================== */
+
+let scratchCanvas;
+let scratchContext;
+let isScratching = false;
 let scratchReady = false;
-
-
-/* ==================================================
-   15. PHOTO LOADING
-================================================== */
-
-if (hiddenPhoto) {
-
-    hiddenPhoto.onload = () => {
-
-        if (
-            document.getElementById("s6")
-                ?.classList.contains("active")
-        ) {
-            resetScratch();
-        }
-
-    };
-
-    hiddenPhoto.onerror = () => {
-
-        console.error("Birthday photo not found!");
-
-        const progress =
-            document.getElementById("scratchProgress");
-
-        if (progress) {
-
-            progress.textContent =
-                "Photo loading failed. Check bavani-photo.jpg";
-
-        }
-
-    };
-
-}
-
-
-/* ==================================================
-   16. SETUP SCRATCH
-================================================== */
+let scratchMoves = 0;
+let scratchUnlocked = false;
 
 function setupScratch() {
+  if (scratchReady) return;
 
-    if (!canvas || !ctx || !hiddenPhoto) return;
+  scratchCanvas = document.getElementById("scratchCanvas");
 
-    if (
-        hiddenPhoto.complete &&
-        hiddenPhoto.naturalWidth > 0
-    ) {
-        resetScratch();
-    }
+  const wrap = document.getElementById("scratchWrap");
 
+  if (!scratchCanvas || !wrap) return;
+
+  const width = wrap.clientWidth;
+  const height = wrap.clientHeight;
+
+  if (!width || !height) return;
+
+  const dpr = Math.max(1, window.devicePixelRatio || 1);
+
+  scratchCanvas.width = Math.round(width * dpr);
+  scratchCanvas.height = Math.round(height * dpr);
+
+  scratchCanvas.style.width = width + "px";
+  scratchCanvas.style.height = height + "px";
+
+  scratchContext = scratchCanvas.getContext("2d", {
+    willReadFrequently: true
+  });
+
+  scratchContext.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  // Scratch cover
+  const gradient = scratchContext.createLinearGradient(
+    0, 0, width, height
+  );
+
+  gradient.addColorStop(0, "#ff7eb3");
+  gradient.addColorStop(0.5, "#ff4f9a");
+  gradient.addColorStop(1, "#a83279");
+
+  scratchContext.fillStyle = gradient;
+  scratchContext.fillRect(0, 0, width, height);
+
+  // Cover text
+  scratchContext.fillStyle = "#ffffff";
+  scratchContext.textAlign = "center";
+  scratchContext.textBaseline = "middle";
+  scratchContext.font = "bold 23px sans-serif";
+  scratchContext.fillText(
+    "Scratch Here ❤️",
+    width / 2,
+    height / 2
+  );
+
+  scratchContext.font = "15px sans-serif";
+  scratchContext.fillText(
+    "Reveal your memory",
+    width / 2,
+    height / 2 + 35
+  );
+
+  scratchReady = true;
+
+  scratchCanvas.addEventListener("pointerdown", startScratch);
+  scratchCanvas.addEventListener("pointermove", moveScratch);
+  scratchCanvas.addEventListener("pointerup", stopScratch);
+  scratchCanvas.addEventListener("pointercancel", stopScratch);
+  scratchCanvas.addEventListener("pointerleave", stopScratch);
 }
 
+function getScratchPosition(event) {
+  const rect = scratchCanvas.getBoundingClientRect();
 
-/* ==================================================
-   17. RESET SCRATCH CANVAS
-================================================== */
-
-function resetScratch() {
-
-    if (!canvas || !ctx || !hiddenPhoto) return;
-
-    const wrap = document.getElementById("scratchWrap");
-
-    if (!wrap || !hiddenPhoto.naturalWidth) return;
-
-    const width = wrap.clientWidth;
-
-    const height = wrap.clientHeight;
-
-    if (!width || !height) return;
-
-    const dpr = window.devicePixelRatio || 1;
-
-    canvas.width = Math.round(width * dpr);
-
-    canvas.height = Math.round(height * dpr);
-
-    canvas.style.width = width + "px";
-
-    canvas.style.height = height + "px";
-
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-    ctx.globalCompositeOperation = "source-over";
-
-    // Scratch cover gradient
-    const gradient = ctx.createLinearGradient(
-        0, 0, width, height
-    );
-
-    gradient.addColorStop(0, "#ff4d6d");
-
-    gradient.addColorStop(0.5, "#c77dff");
-
-    gradient.addColorStop(1, "#4895ef");
-
-    ctx.fillStyle = gradient;
-
-    ctx.fillRect(0, 0, width, height);
-
-    // Scratch instructions
-    ctx.fillStyle = "#ffffff";
-
-    ctx.textAlign = "center";
-
-    ctx.textBaseline = "middle";
-
-    ctx.font = "bold 22px Arial";
-
-    ctx.fillText(
-        "✨ SCRATCH TO REVEAL ✨",
-        width / 2,
-        height / 2
-    );
-
-    ctx.font = "15px Arial";
-
-    ctx.fillText(
-        "A little surprise is waiting for you ❤️",
-        width / 2,
-        height / 2 + 35
-    );
-
-    // Enable scratch erasing
-    ctx.globalCompositeOperation = "destination-out";
-
-    scratched = false;
-
-    scratching = false;
-
-    scratchReady = true;
-
-    const progress =
-        document.getElementById("scratchProgress");
-
-    const button =
-        document.getElementById("scratchContinue");
-
-    if (progress) {
-        progress.textContent = "0% revealed";
-    }
-
-    if (button) {
-        button.disabled = true;
-    }
-
+  return {
+    x: event.clientX - rect.left,
+    y: event.clientY - rect.top
+  };
 }
 
+function startScratch(event) {
+  if (scratchUnlocked) return;
 
-/* ==================================================
-   18. POINTER POSITION
-================================================== */
+  isScratching = true;
 
-function getPosition(event) {
+  scratchCanvas.setPointerCapture(event.pointerId);
 
-    const rect = canvas.getBoundingClientRect();
-
-    return {
-
-        x: event.clientX - rect.left,
-
-        y: event.clientY - rect.top
-
-    };
-
+  scratchAt(event);
 }
 
+function moveScratch(event) {
+  if (!isScratching || scratchUnlocked) return;
 
-/* ==================================================
-   19. SCRATCH FUNCTION
-================================================== */
+  scratchAt(event);
+}
 
-function scratch(event) {
+function stopScratch() {
+  isScratching = false;
+}
 
-    if (!scratching || scratched || !scratchReady) return;
+function scratchAt(event) {
+  const position = getScratchPosition(event);
 
-    if (!ctx || !canvas) return;
+  scratchContext.globalCompositeOperation = "destination-out";
 
-    const position = getPosition(event);
+  scratchContext.beginPath();
+  scratchContext.arc(
+    position.x,
+    position.y,
+    25,
+    0,
+    Math.PI * 2
+  );
 
-    ctx.globalCompositeOperation = "destination-out";
+  scratchContext.fill();
 
-    ctx.beginPath();
+  scratchMoves++;
 
-    ctx.arc(
-        position.x,
-        position.y,
-        24,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fill();
-
-    sparkleBurst(position.x, position.y);
-
+  if (scratchMoves % 5 === 0) {
     checkScratchProgress();
-
+  }
 }
-
-
-/* ==================================================
-   20. CHECK SCRATCH PERCENTAGE
-================================================== */
 
 function checkScratchProgress() {
+  if (scratchUnlocked) return;
 
-    if (!ctx || !canvas || scratched) return;
+  const canvasWidth = scratchCanvas.width;
+  const canvasHeight = scratchCanvas.height;
 
-    const imageData = ctx.getImageData(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
+  const imageData = scratchContext.getImageData(
+    0,
+    0,
+    canvasWidth,
+    canvasHeight
+  );
 
-    const data = imageData.data;
+  const pixels = imageData.data;
 
-    let transparent = 0;
+  let transparent = 0;
+  let total = 0;
 
-    let total = 0;
+  // Sample every 16th pixel for better performance
+  for (let i = 3; i < pixels.length; i += 64) {
+    total++;
 
-    // Sample pixels to calculate progress
-    for (let i = 3; i < data.length; i += 160) {
-
-        total++;
-
-        if (data[i] < 80) {
-            transparent++;
-        }
-
+    if (pixels[i] < 100) {
+      transparent++;
     }
+  }
 
-    const percent = Math.floor(
-        (transparent / total) * 100
-    );
+  const percentage = Math.round(
+    (transparent / total) * 100
+  );
 
-    const progress =
-        document.getElementById("scratchProgress");
+  document.getElementById("scratchProgress").textContent =
+    "Photo revealed: " + percentage + "%";
 
-    if (progress) {
+  if (percentage >= 55) {
+    revealPhoto();
+  }
+}
 
-        progress.textContent =
-            percent + "% revealed";
+function revealPhoto() {
+  if (scratchUnlocked) return;
 
-    }
+  scratchUnlocked = true;
+  isScratching = false;
 
-    // 80% completed
-    if (percent >= 80) {
+  const dpr = Math.max(1, window.devicePixelRatio || 1);
 
-        scratched = true;
+  scratchContext.setTransform(1, 0, 0, 1, 0, 0);
+  scratchContext.clearRect(
+    0,
+    0,
+    scratchCanvas.width,
+    scratchCanvas.height
+  );
 
-        ctx.clearRect(
-            0,
-            0,
-            canvas.width,
-            canvas.height
-        );
+  document.getElementById("scratchProgress").textContent =
+    "Surprise revealed! ❤️";
 
-        const button =
-            document.getElementById("scratchContinue");
+  document.getElementById("scratchContinue").disabled = false;
 
-        if (button) {
-            button.disabled = false;
-        }
-
-        if (progress) {
-
-            progress.textContent =
-                "🎉 Surprise revealed! ❤️";
-
-        }
-
-        createSparkles();
-
-    }
-
+  sparkleBurst();
 }
 
 
-/* ==================================================
-   21. SCRATCH EVENTS
-================================================== */
+/* ==============================
+   POPUP MODAL
+============================== */
 
-if (canvas) {
+function showModal(emoji, title, message) {
+  document.getElementById("modalEmoji").textContent = emoji;
+  document.getElementById("modalTitle").textContent = title;
+  document.getElementById("modalMessage").textContent = message;
 
-    canvas.addEventListener("pointerdown", event => {
+  document.getElementById("modal").classList.add("show");
+}
 
-        if (scratched || !scratchReady) return;
-
-        scratching = true;
-
-        canvas.setPointerCapture(event.pointerId);
-
-        scratch(event);
-
-    });
-
-    canvas.addEventListener("pointermove", scratch);
-
-    canvas.addEventListener("pointerup", () => {
-
-        scratching = false;
-
-    });
-
-    canvas.addEventListener("pointercancel", () => {
-
-        scratching = false;
-
-    });
-
+function closeModal() {
+  document.getElementById("modal").classList.remove("show");
 }
 
 
-/* ==================================================
-   22. SCRATCH SPARKLE EFFECT
-================================================== */
-
-function sparkleBurst(x, y) {
-
-    const wrap = document.getElementById("scratchWrap");
-
-    if (!wrap) return;
-
-    for (let i = 0; i < 3; i++) {
-
-        const sparkle = document.createElement("span");
-
-        sparkle.className = "scratchSparkle";
-
-        sparkle.textContent = "✨";
-
-        sparkle.style.position = "absolute";
-
-        sparkle.style.left = x + "px";
-
-        sparkle.style.top = y + "px";
-
-        sparkle.style.pointerEvents = "none";
-
-        sparkle.style.zIndex = "5";
-
-        wrap.appendChild(sparkle);
-
-        setTimeout(() => {
-            sparkle.remove();
-        }, 800);
-
-    }
-
-}
-
-
-/* ==================================================
-   23. GENERAL SPARKLE EFFECT
-================================================== */
-
-function createSparkles() {
-
-    for (let i = 0; i < 20; i++) {
-
-        const sparkle = document.createElement("div");
-
-        sparkle.className = "sparkle";
-
-        sparkle.textContent =
-            ["✨", "⭐", "💖", "🌟"][
-                Math.floor(Math.random() * 4)
-            ];
-
-        sparkle.style.position = "fixed";
-
-        sparkle.style.left =
-            Math.random() * 100 + "vw";
-
-        sparkle.style.top =
-            Math.random() * 100 + "vh";
-
-        sparkle.style.pointerEvents = "none";
-
-        sparkle.style.zIndex = "9999";
-
-        document.body.appendChild(sparkle);
-
-        setTimeout(() => {
-            sparkle.remove();
-        }, 1800);
-
-    }
-
-}
-
-
-/* ==================================================
-   24. SEND MESSAGE TO FORMSPREE
-================================================== */
+/* ==============================
+   SEND MESSAGE TO FORMSPREE
+============================== */
 
 async function saveResponse() {
+  const message = document.getElementById("herMessage").value.trim();
+  const button = document.getElementById("sendButton");
+  const status = document.getElementById("responseStatus");
 
-    const messageInput =
-        document.getElementById("herMessage");
+  if (!message) {
+    status.textContent = "Please write a message first ❤️";
+    return;
+  }
 
-    const status =
-        document.getElementById("responseStatus");
+  button.disabled = true;
+  button.textContent = "Sending...";
 
-    const sendButton =
-        document.getElementById("sendButton");
+  status.textContent = "";
 
-    if (!messageInput || !messageInput.value.trim()) {
-
-        if (status) {
-
-            status.textContent =
-                "Write a little message first ❤️";
-
-        }
-
-        return;
-
-    }
-
-    const data = {
-
+  try {
+    const response = await fetch(FORMSPREE_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
         name: "Bavani",
+        message: message,
+        subject: "Birthday Website Reply"
+      })
+    });
 
-        message: messageInput.value.trim(),
-
-        subject: "A special message from Bavani ❤️"
-
-    };
-
-    if (status) {
-
-        status.textContent =
-            "Sending your message... 💌";
-
+    if (!response.ok) {
+      throw new Error("Message could not be sent.");
     }
 
-    if (sendButton) {
-        sendButton.disabled = true;
+    status.textContent = "Your message was sent successfully! ❤️";
+    document.getElementById("herMessage").value = "";
+
+    button.textContent = "Sent Successfully ❤️";
+
+  } catch (error) {
+    status.textContent =
+      "Sorry! Message failed to send. Please try again.";
+
+    button.disabled = false;
+    button.textContent = "Send Message ❤️";
+  }
+}
+
+
+/* ==============================
+   SPARKLE EFFECT
+============================== */
+
+function sparkleBurst() {
+  const emojis = ["✨", "💖", "💕", "🌸", "❤️"];
+
+  for (let i = 0; i < 15; i++) {
+    const sparkle = document.createElement("div");
+
+    sparkle.textContent =
+      emojis[Math.floor(Math.random() * emojis.length)];
+
+    sparkle.style.position = "fixed";
+    sparkle.style.left = Math.random() * 100 + "vw";
+    sparkle.style.top = Math.random() * 100 + "vh";
+    sparkle.style.fontSize = "22px";
+    sparkle.style.pointerEvents = "none";
+    sparkle.style.zIndex = "200";
+    sparkle.style.transition = "all 1s ease";
+
+    document.body.appendChild(sparkle);
+
+    requestAnimationFrame(() => {
+      sparkle.style.transform =
+        "translateY(-70px) scale(1.5)";
+      sparkle.style.opacity = "0";
+    });
+
+    setTimeout(() => sparkle.remove(), 1100);
+  }
+}
+
+
+/* ==============================
+   FLOATING HEARTS
+============================== */
+
+function createFloatingHeart() {
+  const container = document.getElementById("hearts");
+
+  const heart = document.createElement("div");
+
+  heart.className = "heart";
+  heart.textContent = ["❤️", "💕", "💖", "💗"][
+    Math.floor(Math.random() * 4)
+  ];
+
+  heart.style.left = Math.random() * 100 + "%";
+  heart.style.animationDuration =
+    (5 + Math.random() * 5) + "s";
+
+  container.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 10000);
+}
+
+
+/* ==============================
+   INITIALIZE
+============================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+  createBalloons();
+
+  setInterval(createFloatingHeart, 800);
+
+  // Enter key for password
+  document.getElementById("password").addEventListener(
+    "keydown",
+    event => {
+      if (event.key === "Enter") {
+        checkPassword();
+      }
     }
+  );
 
-    try {
-
-        const response = await fetch(FORMSPREE_URL, {
-
-            method: "POST",
-
-            headers: {
-
-                "Content-Type": "application/json",
-
-        
+  // Start music on first interaction
+  document.addEventListener("click", startMusic, {
+    once: true
+  });
+});
+                          
