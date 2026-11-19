@@ -4,31 +4,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday Bavani ❤️</title>
+  <meta name="theme-color" content="#10002b">
+  <title>For Bavani ❤️</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-  <audio id="bgMusic" src="romantic.mp3" loop></audio>
+  <div class="aurora"></div>
+  <div class="particles" id="particles"></div>
+  <div class="stars" id="stars"></div>
 
-  <div class="hearts" id="hearts"></div>
+  <audio id="bgMusic" src="romantic.mp3" loop></audio>
 
   <!-- SCREEN 1 -->
   <section class="screen active" id="s1">
     <div class="content">
-      <div class="big-emoji">🎁</div>
-      <h1>A Little Surprise For You</h1>
-      <p>Someone special has prepared something for you...</p>
-      <button onclick="next(2)">Open Your Gift ❤️</button>
+      <div class="crystal-icon">💎</div>
+      <p class="eyebrow">A SPECIAL SURPRISE FOR YOU</p>
+      <h1 class="rainbow-text">Hello Bavani!</h1>
+      <p class="description">
+        A magical little world has been created just for you.
+        Are you ready to explore it?
+      </p>
+      <button onclick="next(2)">Open Your Surprise ✨</button>
     </div>
   </section>
 
   <!-- SCREEN 2 -->
   <section class="screen" id="s2">
     <div class="content">
-      <h1>Something Special Is Waiting! ✨</h1>
-      <p class="subtitle">Your birthday countdown</p>
+      <div class="crystal-icon">🌌</div>
+      <h1 class="rainbow-text">Your Special Day</h1>
+      <p class="description">Every second brings us closer!</p>
 
       <div class="countdown">
         <div><span id="days">00</span><small>Days</small></div>
@@ -37,19 +44,23 @@
         <div><span id="seconds">00</span><small>Seconds</small></div>
       </div>
 
-      <p id="countText">Counting down to your special day...</p>
-      <button id="countContinue" onclick="next(3)" disabled>Continue ❤️</button>
+      <p id="countText">Counting down to your birthday...</p>
+      <button id="countContinue" onclick="next(3)" disabled>
+        Continue 💖
+      </button>
     </div>
   </section>
 
   <!-- SCREEN 3 -->
   <section class="screen" id="s3">
     <div class="content">
-      <div class="big-emoji">🔐</div>
-      <h1>A Little Secret!</h1>
-      <p>Enter the secret password to continue.</p>
+      <div class="crystal-icon">🔐</div>
+      <h1 class="rainbow-text">Secret Unlock</h1>
+      <p class="description">
+        A little secret is needed to enter your magical world.
+      </p>
 
-      <input type="password" id="password" placeholder="Enter Password">
+      <input type="password" id="password" placeholder="Enter Secret Password">
       <p class="error" id="passError"></p>
 
       <button onclick="checkPassword()">Unlock ❤️</button>
@@ -59,14 +70,19 @@
   <!-- SCREEN 4 -->
   <section class="screen" id="s4">
     <div class="content wide">
-      <h1>26 Little Surprises 🎈</h1>
-      <p>Tap every balloon to discover a message!</p>
+      <div class="crystal-icon">🎈</div>
+      <h1 class="rainbow-text">26 Magical Surprises</h1>
+      <p class="description">
+        Every letter holds a little wish for you.
+        Open all the balloons!
+      </p>
 
-      <div id="balloonGrid" class="balloon-grid"></div>
+      <div class="balloon-grid" id="balloonGrid"></div>
 
       <p id="balloonCount">Opened: 0 / 26</p>
+
       <button id="balloonContinue" onclick="next(5)" disabled>
-        Continue ❤️
+        Continue 💖
       </button>
     </div>
   </section>
@@ -74,30 +90,50 @@
   <!-- SCREEN 5 -->
   <section class="screen" id="s5">
     <div class="content">
-      <h1>One More Surprise! 🎁</h1>
-      <p>There is something special inside this gift.</p>
+      <div class="crystal-icon">🎁</div>
+      <h1 class="rainbow-text">A Magical Gift</h1>
+      <p class="description">
+        Something beautiful is waiting inside.
+        Tap the gift to open it!
+      </p>
 
-      <div class="big-box" onclick="openBox()">
-        <span>🎁</span>
-        <small>Tap to open</small>
+      <div class="gift-scene" onclick="openBox()">
+        <div class="gift-box" id="giftBox">
+          <div class="gift-lid"></div>
+          <div class="gift-body"></div>
+          <div class="gift-ribbon"></div>
+          <div class="gift-bow">🎀</div>
+        </div>
       </div>
 
-      <p id="boxText"></p>
+      <p id="boxText">Tap the gift box ✨</p>
     </div>
   </section>
 
   <!-- SCREEN 6 -->
   <section class="screen" id="s6">
     <div class="content wide">
-      <h1>A Beautiful Memory ❤️</h1>
-      <p>Scratch the cover to reveal your photo.</p>
+      <div class="crystal-icon">💎</div>
+      <h1 class="rainbow-text">A Precious Memory</h1>
+      <p class="description">
+        Scratch the crystal cover and reveal your beautiful memory.
+      </p>
 
-      <div id="scratchWrap" class="scratch-wrap">
-        <img id="hiddenPhoto" src="bavani-photo.jpg" alt="Bavani's photo">
+      <div class="scratch-wrap" id="scratchWrap">
+        <img
+          id="hiddenPhoto"
+          src="bavani-photo.jpg"
+          alt="Bavani's memory"
+        >
         <canvas id="scratchCanvas"></canvas>
+        <div class="photo-overlay" id="photoOverlay">
+          <span>⭐</span>
+          <strong>SCRATCH TO REVEAL</strong>
+          <small>✨ A special memory awaits ✨</small>
+        </div>
       </div>
 
-      <p id="scratchProgress">Scratch to reveal your surprise!</p>
+      <p id="scratchProgress">Reveal your beautiful memory! 💖</p>
 
       <button id="scratchContinue" onclick="next(7)" disabled>
         Continue ❤️
@@ -108,33 +144,46 @@
   <!-- SCREEN 7 -->
   <section class="screen" id="s7">
     <div class="content">
-      <div class="big-emoji">🎂</div>
-      <h1>Happy Birthday Bavani! ❤️</h1>
+      <div class="crystal-icon">🎂</div>
+      <p class="eyebrow">A DAY MADE JUST FOR YOU</p>
+      <h1 class="rainbow-text">Happy Birthday Bavani!</h1>
 
-      <p class="birthday-message">
-        May your life always be filled with happiness,
+      <div class="birthday-message">
+        May your life shine brighter than all the stars.
+
+        May every dream in your heart come true.
+
+        May your days be filled with happiness,
         beautiful memories, endless smiles and love.
-        <br><br>
-        You deserve all the beautiful things this world has to offer.
-        <br><br>
-        Keep smiling and stay happy always! 🥰
-      </p>
 
-      <h2>Once Again, Happy Birthday! 🎉</h2>
+        You deserve all the wonderful things
+        this beautiful world has to offer.
 
-      <button onclick="next(8)">One Last Thing 💌</button>
+        <br><br>
+        Keep shining, keep smiling and stay happy always! ❤️
+      </div>
+
+      <h2 class="gold-text">Happy Birthday! 🎉</h2>
+
+      <button onclick="next(8)">One Last Surprise 💌</button>
     </div>
   </section>
 
   <!-- SCREEN 8 -->
   <section class="screen" id="s8">
     <div class="content">
-      <div class="big-emoji">💌</div>
-      <h1>A Message For Me?</h1>
+      <div class="crystal-icon">💌</div>
+      <h1 class="rainbow-text">A Message For Me?</h1>
 
-      <p>If you want to say something, leave your message here.</p>
+      <p class="description">
+        If you want to say something,
+        leave your little message here.
+      </p>
 
-      <textarea id="herMessage" placeholder="Write your message here..."></textarea>
+      <textarea
+        id="herMessage"
+        placeholder="Write your message here..."
+      ></textarea>
 
       <button id="sendButton" onclick="saveResponse()">
         Send Message ❤️
@@ -144,13 +193,13 @@
     </div>
   </section>
 
-  <!-- MESSAGE POPUP -->
+  <!-- POPUP -->
   <div class="modal" id="modal">
     <div class="modal-box">
-      <div id="modalEmoji" class="big-emoji">❤️</div>
-      <h2 id="modalTitle"></h2>
+      <div class="modal-emoji" id="modalEmoji">💖</div>
+      <h2 class="rainbow-text" id="modalTitle"></h2>
       <p id="modalMessage"></p>
-      <button onclick="closeModal()">Close ❤️</button>
+      <button onclick="closeModal()">Close ✨</button>
     </div>
   </div>
 
