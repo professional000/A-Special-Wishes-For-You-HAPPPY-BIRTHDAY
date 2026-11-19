@@ -1,362 +1,159 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#160d35">
-
-<title>For Bavani ❤️</title>
-
-<link rel="stylesheet" href="style.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Bavani ❤️</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- 01 GIFT OPENING -->
+  <audio id="bgMusic" src="romantic.mp3" loop></audio>
 
-<section class="screen active" id="s1">
+  <div class="hearts" id="hearts"></div>
 
-    <div class="glass">
-
-        <div class="gift" onclick="next(2)">🎁</div>
-
-        <p>A little surprise is waiting for you...</p>
-
-        <h1 class="gradient-text">Hey Bavani! ❤️</h1>
-
-        <p>
-            Someone has prepared something magical
-            just for you.
-        </p>
-
-        <button onclick="next(2)">
-            TAP TO OPEN YOUR GIFT ✨
-        </button>
-
+  <!-- SCREEN 1 -->
+  <section class="screen active" id="s1">
+    <div class="content">
+      <div class="big-emoji">🎁</div>
+      <h1>A Little Surprise For You</h1>
+      <p>Someone special has prepared something for you...</p>
+      <button onclick="next(2)">Open Your Gift ❤️</button>
     </div>
+  </section>
 
-</section>
+  <!-- SCREEN 2 -->
+  <section class="screen" id="s2">
+    <div class="content">
+      <h1>Something Special Is Waiting! ✨</h1>
+      <p class="subtitle">Your birthday countdown</p>
 
+      <div class="countdown">
+        <div><span id="days">00</span><small>Days</small></div>
+        <div><span id="hours">00</span><small>Hours</small></div>
+        <div><span id="minutes">00</span><small>Minutes</small></div>
+        <div><span id="seconds">00</span><small>Seconds</small></div>
+      </div>
 
-<!-- 02 COUNTDOWN -->
-
-<section class="screen" id="s2">
-
-    <div class="glass">
-
-        <div class="emoji">⏳</div>
-
-        <h2 class="gradient-text">
-            The Magical Countdown
-        </h2>
-
-        <p>
-            Your special day is getting closer, Bavani!
-        </p>
-
-        <div class="timer">
-
-            <div class="time">
-                <strong id="days">00</strong>
-                <span>DAYS</span>
-            </div>
-
-            <div class="time">
-                <strong id="hours">00</strong>
-                <span>HOURS</span>
-            </div>
-
-            <div class="time">
-                <strong id="minutes">00</strong>
-                <span>MINUTES</span>
-            </div>
-
-            <div class="time">
-                <strong id="seconds">00</strong>
-                <span>SECONDS</span>
-            </div>
-
-        </div>
-
-        <p id="countText">
-            Counting every moment... ❤️
-        </p>
-
-        <button
-            id="countContinue"
-            onclick="next(3)"
-            disabled>
-            CONTINUE ✨
-        </button>
-
-        <p>04 December 2026</p>
-
+      <p id="countText">Counting down to your special day...</p>
+      <button id="countContinue" onclick="next(3)" disabled>Continue ❤️</button>
     </div>
+  </section>
 
-</section>
+  <!-- SCREEN 3 -->
+  <section class="screen" id="s3">
+    <div class="content">
+      <div class="big-emoji">🔐</div>
+      <h1>A Little Secret!</h1>
+      <p>Enter the secret password to continue.</p>
 
+      <input type="password" id="password" placeholder="Enter Password">
+      <p class="error" id="passError"></p>
 
-<!-- 03 PASSWORD -->
-
-<section class="screen" id="s3">
-
-    <div class="glass">
-
-        <div class="emoji">🔐</div>
-
-        <h2 class="gradient-text">
-            A Secret Between Us
-        </h2>
-
-        <p>
-            Only someone special can enter
-            this magical world.
-        </p>
-
-        <input
-            id="password"
-            class="password-input"
-            type="password"
-            placeholder="Enter secret password"
-        >
-
-        <button onclick="checkPassword()">
-            UNLOCK MY SURPRISE ❤️
-        </button>
-
-        <p id="passError"></p>
-
+      <button onclick="checkPassword()">Unlock ❤️</button>
     </div>
+  </section>
 
-</section>
+  <!-- SCREEN 4 -->
+  <section class="screen" id="s4">
+    <div class="content wide">
+      <h1>26 Little Surprises 🎈</h1>
+      <p>Tap every balloon to discover a message!</p>
 
+      <div id="balloonGrid" class="balloon-grid"></div>
 
-<!-- 04 A TO Z BALLOONS -->
-
-<section class="screen" id="s4">
-
-    <div class="glass wide">
-
-        <h2 class="gradient-text">
-            26 Little Surprises 🎈
-        </h2>
-
-        <p>
-            A to Z... Every letter has a little
-            message for you!
-        </p>
-
-        <div class="balloon-grid" id="balloonGrid">
-        </div>
-
-        <p id="balloonCount">
-            0 / 26 opened
-        </p>
-
-        <button
-            id="balloonContinue"
-            onclick="next(5)"
-            disabled>
-            ALL SURPRISES OPENED ✨
-        </button>
-
+      <p id="balloonCount">Opened: 0 / 26</p>
+      <button id="balloonContinue" onclick="next(5)" disabled>
+        Continue ❤️
+      </button>
     </div>
+  </section>
 
-</section>
+  <!-- SCREEN 5 -->
+  <section class="screen" id="s5">
+    <div class="content">
+      <h1>One More Surprise! 🎁</h1>
+      <p>There is something special inside this gift.</p>
 
+      <div class="big-box" onclick="openBox()">
+        <span>🎁</span>
+        <small>Tap to open</small>
+      </div>
 
-<!-- 05 GIFT BOX -->
-
-<section class="screen" id="s5">
-
-    <div class="glass">
-
-        <div class="emoji">💝</div>
-
-        <h2 class="gradient-text">
-            One Last Little Gift
-        </h2>
-
-        <p>
-            One more surprise is waiting for you...
-        </p>
-
-        <div class="big-box" onclick="openBox()">
-            🎁
-        </div>
-
-        <p id="boxText">
-            Tap to open your special gift!
-        </p>
-
+      <p id="boxText"></p>
     </div>
+  </section>
 
-</section>
+  <!-- SCREEN 6 -->
+  <section class="screen" id="s6">
+    <div class="content wide">
+      <h1>A Beautiful Memory ❤️</h1>
+      <p>Scratch the cover to reveal your photo.</p>
 
+      <div id="scratchWrap" class="scratch-wrap">
+        <img id="hiddenPhoto" src="bavani-photo.jpg" alt="Bavani's photo">
+        <canvas id="scratchCanvas"></canvas>
+      </div>
 
-<!-- 06 SCRATCH PHOTO -->
+      <p id="scratchProgress">Scratch to reveal your surprise!</p>
 
-<section class="screen" id="s6">
-
-    <div class="glass">
-
-        <h2 class="gradient-text">
-            A Memory Just For You ⭐
-        </h2>
-
-        <p>
-            Something beautiful is hiding underneath...
-        </p>
-
-        <div class="scratch-wrap" id="scratchWrap">
-
-            <img
-                id="hiddenPhoto"
-                src="bavani-photo.jpg"
-                alt="A special birthday surprise"
-            >
-
-            <canvas id="scratchCanvas"></canvas>
-
-        </div>
-
-        <p class="scratch-note">
-            ✨ Scratch to reveal your special memory.
-            80% is enough!
-        </p>
-
-        <p id="scratchProgress">
-            0% revealed
-        </p>
-
-        <button
-            id="scratchContinue"
-            onclick="next(7)"
-            disabled>
-            REVEAL MY FINAL SURPRISE ❤️
-        </button>
-
+      <button id="scratchContinue" onclick="next(7)" disabled>
+        Continue ❤️
+      </button>
     </div>
+  </section>
 
-</section>
+  <!-- SCREEN 7 -->
+  <section class="screen" id="s7">
+    <div class="content">
+      <div class="big-emoji">🎂</div>
+      <h1>Happy Birthday Bavani! ❤️</h1>
 
+      <p class="birthday-message">
+        May your life always be filled with happiness,
+        beautiful memories, endless smiles and love.
+        <br><br>
+        You deserve all the beautiful things this world has to offer.
+        <br><br>
+        Keep smiling and stay happy always! 🥰
+      </p>
 
-<!-- 07 FINAL BIRTHDAY MESSAGE -->
+      <h2>Once Again, Happy Birthday! 🎉</h2>
 
-<section class="screen" id="s7">
-
-    <div class="glass">
-
-        <div class="final-heart">❤️</div>
-
-        <h1 class="gradient-text">
-            Happy Birthday Bavani!
-        </h1>
-
-        <p class="final-message">
-
-            சில மனிதர்கள் வாழ்க்கையில் வருவது
-            ஒரு சாதாரண நிகழ்வு அல்ல...!
-
-            <br><br>
-
-            அவர்கள் வருகையால் சில நினைவுகள்
-            அழகாகின்றன...
-            சில நிமிடங்கள் மறக்க முடியாதவையாகின்றன...!
-
-            <br><br>
-
-            உன் வாழ்க்கையில் மகிழ்ச்சி என்றும்
-            நிறைந்திருக்கட்டும்.
-
-            உன் கனவுகள் அனைத்தும் நனவாகட்டும்.
-
-            <br><br>
-
-            May your life be filled with endless
-            happiness, beautiful memories and
-            magical moments.
-
-            <br><br>
-
-            Once again, Happy Birthday Bavani! 🥹❤️
-
-        </p>
-
-        <button onclick="next(8)">
-            ONE LAST THING... 💌
-        </button>
-
+      <button onclick="next(8)">One Last Thing 💌</button>
     </div>
+  </section>
 
-</section>
+  <!-- SCREEN 8 -->
+  <section class="screen" id="s8">
+    <div class="content">
+      <div class="big-emoji">💌</div>
+      <h1>A Message For Me?</h1>
 
+      <p>If you want to say something, leave your message here.</p>
 
-<!-- 08 HER MESSAGE -->
+      <textarea id="herMessage" placeholder="Write your message here..."></textarea>
 
-<section class="screen" id="s8">
+      <button id="sendButton" onclick="saveResponse()">
+        Send Message ❤️
+      </button>
 
-    <div class="glass">
-
-        <div class="emoji">💌</div>
-
-        <h2 class="gradient-text">
-            A Little Something From You
-        </h2>
-
-        <p>
-            இந்தச் சிறிய surprise-ஐப் பார்த்ததும்
-            உன் மனதில் தோன்றியதை என்னுடன்
-            பகிர்ந்து கொள்வாயா?
-        </p>
-
-        <textarea
-            id="herMessage"
-            rows="5"
-            placeholder="Write what's in your heart... ❤️"
-        ></textarea>
-
-        <button
-            id="sendButton"
-            onclick="saveResponse()">
-            SEND WITH LOVE 💕
-        </button>
-
-        <p id="responseStatus"></p>
-
+      <p id="responseStatus"></p>
     </div>
+  </section>
 
-</section>
-
-
-<!-- MESSAGE POPUP -->
-
-<div class="modal" id="modal">
-
-    <div class="modal-card">
-
-        <div class="emoji" id="modalEmoji">
-            💗
-        </div>
-
-        <h2 class="gradient-text" id="modalTitle">
-        </h2>
-
-        <p id="modalMessage">
-        </p>
-
-        <button onclick="closeModal()">
-            CLOSE ❤️
-        </button>
-
+  <!-- MESSAGE POPUP -->
+  <div class="modal" id="modal">
+    <div class="modal-box">
+      <div id="modalEmoji" class="big-emoji">❤️</div>
+      <h2 id="modalTitle"></h2>
+      <p id="modalMessage"></p>
+      <button onclick="closeModal()">Close ❤️</button>
     </div>
+  </div>
 
-</div>
-
-
-<script src="script.js"></script>
-
+  <script src="script.js"></script>
 </body>
 </html>
